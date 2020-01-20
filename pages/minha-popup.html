@@ -1,0 +1,417 @@
+
+<!DOCTYPE html><html><script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>@font-face {
+	font-family: 'Catamaran';
+	font-style: normal;
+	font-weight: 300;
+	src: local('Catamaran Light'), local('Catamaran-Light'), url(https://fonts.gstatic.com/s/catamaran/v1/Aaag4ccR7Oh_4eai-jbrYOgdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+* { font-family: 'Catamaran', sans-serif; }
+* { border:0; padding:0; margin:0; box-sizing:border-box; }</style><title>Avalie</title><meta name="robots" content="noindex, nofollow"><link href="/css/admin/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css"><link href="//fonts.googleapis.com/css?family=Poppins" media="all" rel="stylesheet"><style>* {font-family: "Poppins", sans-serif; }</style><style>.float { float:left; clear:none; }
+.breaker { float:none; clear:both; }
+.disabled { color:#c3c3c3 !important; border-color:#c3c3c3 !important; cursor:not-allowed; }
+body { background-color:transparent; overflow:hidden; }
+#wizard { height:550px; width:100%; max-width:900px; margin:0 auto; position:relative; overflow:hidden; }
+.slide {
+	display:none;
+	position:absolute;
+	width:100%;
+	border:solid 1px #a2a2a2; border-radius:2px;
+	top:0;
+	transition-property: top, opacity;
+	transition-duration: 0.5s;
+	transition-timing-function: ease-in-out;
+	background-color:#fff;
+	padding:20px 20px 50px 20px;
+	opacity: 0.2;
+}
+.slide.first { opacity:1;display:block; }
+.slide h3, .slide h4 { text-align:center; max-width:500px; margin:0 auto; font-weight:normal; text-transform:uppercase; }
+.slide h3 { margin-bottom:10px; font-size:24px; color:#1C1C1C; font-weight:bold; }
+.slide h4 { color: #888; font-size:20px;  }
+.button, .numpad td { background-color:#0078e7; color:white; border:solid 1px #129FEA; margin:15px 0; padding:5px; font-size:22px; border-radius: 12px; cursor:pointer; }
+.button { max-width:400px; margin:15px auto 0; display:block; text-align:center;width:100%; }
+.button.small { width:69px;height:50px;margin:5px;display:inline-block;padding:3px; text-align:center; font-size:16px; }
+span.star { font-size:0.5vw; line-height:36px; vertical-align:middle; width:100px; }
+span.text { width:140px; }
+span.star, span.text { display:inline-block; text-align:left; font-size:18px; }
+.numpad, .numpad table { width:100%; max-width:320px; margin:0 auto; }
+.numpad .numpad-result { text-align:center;font-size:36px;font-weight:bold;padding:10px;margin:40px auto;border:solid 1px #444;height:71px; width:100%; }
+.numpad .button { width:100%; }
+.numpad td { width:33.33%; text-align:center; border:solid 1px black; border-radius:0; }
+.invalid, .invalid:focus { border:solid 1px #ff0000 !important; }
+.switch { text-decoration:underline; cursor: pointer; font-size:14px; text-align:center; }
+.skip, .back { position: absolute; bottom: 8px; font-size:18px; cursor:pointer; }
+.skip { right:20px; }
+.back { left:20px; }
+.errormsg { display:none; color:red; font-weight:bold; font-style: italic; }
+.progressor { position:absolute; border:solid 1px #282828; bottom:28px; left:45%; width:10%; height:25px; margin:0 auto; text-align:center; }
+.progressor .full { position:absolute; width:0; height:100%; background-color:#282828; }
+.progressor .text { color:#000; position:relative;  }
+
+.field-wrap { padding:0 0 20px; max-width: 400px; margin: 0 auto; }
+.field-wrap input { padding:10px 15px; font-size:20px; width: 100%; display: block; border:solid 1px #c1c1c1; }
+.message { visibility:hidden; }
+.field-wrap.error .message { visibility:visible; color:#ff0000; font-weight:bold; }
+.review-text { height:200px;width:100%;font-size:18px;border:solid 1px #282828;padding:10px;outline:0; }
+@media only screen and (min-width: 680px) { .review-text { height:255px; } }
+textarea:focus, input:focus { outline:0; }
+.button, .numpad td {
+	border:solid 1px #282828; color:#282828; background:#fff;
+	border-radius:2px;
+	transition-property: background, color;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+}
+.button.active, .button:focus, .button:hover { background:#282828; color:#fff; outline:0; }
+.legal { max-width:400px; margin:12px auto 0; text-align:center; }
+.legal, .legal a { font-size:13px; color:#999;}
+.legal a { text-decoration:underline; }
+</style><style>.ft-lbs { display:none; }</style></head><body><div id="wizard"><div data-phase-title="rate-item" data-pos='0' class="slide"><h3>O que achou desse produto?</h3><div onclick="nav(this, 2, 'rating', 5);" class="button"><span class="star"><i class="fa star fa-star"></i><i class="fa star fa-star"></i><i class="fa star fa-star"></i><i class="fa star fa-star"></i><i class="fa star fa-star"></i></span><span class="text">Adoro!</span></div><div onclick="nav(this, 2, 'rating', 4);" class="button"><span class="star"><i class="fa star fa-star"></i><i class="fa star fa-star"></i><i class="fa star fa-star"></i><i class="fa star fa-star"></i><i class="fa star fa-star-o"></i></span><span class="text">Gosto</span></div><div onclick="nav(this, 2, 'rating', 3);" class="button"><span class="star"><i class="fa star fa-star"></i><i class="fa star fa-star"></i><i class="fa star fa-star"></i><i class="fa star fa-star-o"></i><i class="fa star fa-star-o"></i></span><span class="text">É satisfatório</span></div><div onclick="nav(this, 2, 'rating', 2);" class="button"><span class="star"><i class="fa star fa-star"></i><i class="fa star fa-star"></i><i class="fa star fa-star-o"></i><i class="fa star fa-star-o"></i><i class="fa star fa-star-o"></i></span><span class="text">Não gostei</span></div><div onclick="nav(this, 2, 'rating', 1);" class="button"><span class="star"><i class="fa star fa-star"></i><i class="fa star fa-star-o"></i><i class="fa star fa-star-o"></i><i class="fa star fa-star-o"></i><i class="fa star fa-star-o"></i></span><span class="text">Odeio</span></div></div><div data-phase-title="image-upload" data-pos='1' class="slide"><h3>Mostra pra gente</h3><h4>Nos mostre o produto em ação!</h4><form method="POST" action="/-/post/img-update" target="fileuploader" enctype="multipart/form-data" style="margin-top:40px;"><input type="hidden" name="hash" value="VkcsaXW0P.128a5578dc073ad077e586a767cd5455"><label for="imageupload" class="button">Escolher foto</label><input type="file" name="img" id="imageupload" style="display:none;" accept="image/x-png,image/jpeg,image/jpg"></form><div onclick="move(1)" class="back">Atrás</div><div onclick="move(3)" class="skip">Pular</div></div><div data-phase-title="textual-review" data-pos='2' class="slide"><h3 title="Review">Fale mais!</h3><textarea id="review" placeholder="Nos diga o que achou do produto" class="review-text"></textarea><div class="errormsg">Campo obrigatório</div><div onclick="nav(this, 4, 'review');" class="button">próximo</div><div onclick="move(2)" class="back">Atrás</div></div><div data-phase-title="personal-details" data-pos='3' class="slide"><h3 style="padding-bottom:20px;">Sobre você</h3><div style="margin:0 auto;max-width:400px;"><div style="width:45%;margin-right:5%;" class="field-wrap float"><input type="text" id="first_name" placeholder="Primeiro nome *" required><div class="message">Campo obrigatório</div></div><div style="width:50%;" class="field-wrap float"><input type="text" id="last_name" placeholder="Último nome"></div></div><div class="breaker"></div><div class="field-wrap"><input type="email" id="email" placeholder="Email *" required><div class="message">Por favor preencha um endereço de email válido</div></div><div class="legal">Ao enviar, eu aceito a  &nbsp;<wbr><a href="/legal/privacy_policy.pdf" target="_blank">Política de Privacidade</a><wbr>&nbsp;e que a minha avaliação será publicada de forma pública e compartilhada on-line</div><button onclick="finish_noreq(this)" class="button submit-review">Feito</button><div onclick="move(3)" class="back">Atrás</div></div></div><script src="/js/lib/jquery-2.1.3.min.js"></script><script>var height = Math.min(500, window.innerHeight - 50);
+var iframe = window != window.top;
+
+(function() {
+	if (iframe) {
+		$('<div style="background: #606061;color: #FFFFFF;line-height: 25px;position: absolute;right:10px;text-align: center;top:10px;width: 24px;text-decoration: none;font-weight: bold;-webkit-border-radius: 12px;-moz-border-radius: 12px;border-radius: 12px;-moz-box-shadow: 1px 1px 3px #000;-webkit-box-shadow: 1px 1px 3px #000;box-shadow: 1px 1px 3px #000;cursor:pointer;">&times;</div>')
+			.click(function() { window.parent.postMessage(JSON.stringify({ type : "closeModal", frame : "looxDialog" }), "*"); })
+			.appendTo('.slide:first');
+		return;
+	}
+
+	document.body.style.background = 'rgba(238, 238, 238, 0.9)';
+	$('#wizard').css('margin-top', Math.max(0, window.innerHeight - height - 50) / 2 + 'px');
+})();
+
+(function() {
+	var slides = $('.slide');
+	for(var i = 0; i < slides.length; i++) {
+		var slide = $(slides[i]);
+
+		if (i == 0)
+			slide.addClass('first');
+		else
+			if (i + 1 < slides.length)
+				$("<div class='progressor'><div class='full'></div><div class='text'></div></div>").appendTo(slide);
+
+		slide
+			.css('height', height + 'px')
+			.css('top', (i * (height + 50)) + 'px')
+			.css('display', 'block');
+	}
+})();
+
+(function(exports) {
+	var has_img = false;
+	var posting = false;
+
+	var result = {
+		clientId: 'Eyb-JzdHoP',
+		hash: 'VkcsaXW0P.128a5578dc073ad077e586a767cd5455',
+		reqId: '',
+		productId: '4361805168685'
+	};
+
+	var Upload = function (file) {
+		this.file = file;
+	};
+	Upload.prototype.getName = function() {
+		return this.file.name;
+	};
+	Upload.prototype.doUpload = function (toUrl, parameters, successCb, errorCb, progressCb) {
+		var that = this;
+		var formData = new FormData;
+
+		// add assoc key values, this will be posts values
+		formData.append("img", this.file, this.getName());
+		if (parameters && !$.isEmptyObject(parameters)) {
+			for(var key in parameters) {
+				formData.append(key, parameters[key]);
+			}
+		}
+
+		$.ajax({
+			type: "POST",
+			url: toUrl,
+			xhr: function () {
+				var myXhr = $.ajaxSettings.xhr();
+				if (myXhr.upload) {
+					myXhr.upload.addEventListener('progress', function(event) {
+						that.progressHandling(event, progressCb)
+					}, false);
+				}
+				return myXhr;
+			},
+			success: successCb ? successCb : null,
+			error: errorCb ? errorCb : null,
+			async: true,
+			data: formData,
+			cache: false,
+			contentType: false,
+			processData: false,
+			timeout: 60000
+		});
+	};
+
+	Upload.prototype.progressHandling = function (event, cb) {
+		var percent = 0;
+		var position = event.loaded || event.position;
+		var total = event.total;
+		if (event.lengthComputable) {
+			percent = Math.ceil(position / total * 100);
+		}
+
+		if (cb) return cb(percent)
+	};
+
+	$('#imageupload').change(function() {
+		$('#upload-spinner').remove();
+		var spinner = document.createElement('div');
+		spinner.id = 'upload-spinner';
+		spinner.style.cssText = [
+			'vertical-align: middle',
+			'position: absolute',
+			'top: 5px',
+			'left: 5px',
+			'min-width: 38px',
+			'height: 41px',
+			'line-height: 41px',
+			'text-align: center',
+			'font-size: 10px',
+			'color:#0496FC',
+			'opacity: 0.4',
+			'padding-left: 10px',
+			'display:none',
+			'background: url(/img/spinner.gif) center left no-repeat'
+		].join(';');
+		spinner.innerText = '0%';
+		$('#wizard').get(0).appendChild(spinner);
+
+		$('.submit-review').attr('disabled', 'disabled').addClass('disabled').text("Carregando imagem, por favor aguarde…");
+		move(3);
+
+		var $form = $(this).closest('form');
+		var file = $(this)[0].files[0];
+		new Upload(file).doUpload(
+			$form.attr('action'),
+			{
+				hash: $form.find('input[name="hash"]').val()
+			},
+			function uploadSuccess(data) {
+				$('#upload-spinner')
+					.css({ background: 'none', color: 'green'})
+					.html('<i class="fa fa-2x fa-check"></i>');
+
+				setTimeout(function() {
+					$('#upload-spinner').remove();
+				}, 1500);
+				$('.submit-review')
+					.removeAttr('disabled')
+					.removeClass('disabled')
+					.html("Feito");
+				has_img = true;
+			},
+			function uploadError(data) {
+				$('#upload-spinner').css({background: 'none', color: 'red'}).text('');
+				$('.submit-review')
+					.removeAttr('disabled')
+					.removeClass('disabled')
+					.html("Feito");
+			},
+			function uploadProgress(percent) {
+				if (percent > 0)
+					$('#upload-spinner').show().html(percent + '% <div style="width:15px;display:inline-block"></div> Uploading...');
+				if (percent == 100)
+					$('#upload-spinner').show().html('<div style="width:35px;display:inline-block"></div> Processing...');
+			}
+		);
+	});
+
+	function save(sender, field, value) {
+		result[field] = value;
+
+		var parent = $(sender).parents('.scope');
+		if (parent.length == 0)
+			parent = $(sender).parents('.slide');
+
+		parent.find('.button').removeClass('active');
+		$(sender).addClass('active');
+		$.ajax({
+			url : '/-/post/update',
+			method : 'POST',
+			data : result,
+			success : function() {
+			},
+			error : function(err) {
+				alert('error');
+			}
+		});
+	}
+
+	function finish(sender) {
+		if (posting) return;
+
+		var e = document.getElementById('review');
+		if (e.value == "") {
+			$(e).addClass('invalid');
+			$(e).focus();
+			posting = false;
+			return;
+		}
+		result.review = e.value;
+		sender.disabled = 'disabled';
+		
+		posting = true;
+		$.ajax({
+			url : '/-/post/finish',
+			method : 'POST',
+			data : result,
+			success : function(data) {
+				if (typeof ga !== 'undefined') {
+					ga('send', { hitType: 'event', eventCategory: 'Wrote-Review', eventAction: (iframe ? "Iframe" : "On-site") });
+					ga('send', { hitType: 'event', eventCategory: 'Wrote-Review', eventAction: (has_img ? "Image" : "No-image") });
+				}
+				setTimeout(function() {
+					if (data.indexOf('http') === 0)
+						window.top.location = data;
+
+					window.location = data;
+				}, 500);
+			},
+			error : function() {
+				posting = false;
+				alert('error');
+			}
+		});
+	}
+
+	function nav(sender, index, field, value){
+		var e = document.getElementById(field);
+		if (field && !value)
+			value = e.value || e.innerHTML;
+
+		if (field && value) {
+			$(e).removeClass('invalid');
+			$(e).parent().find('.errormsg').hide();
+			save(sender, field, value);
+		} else {
+			$(e).parent().find('.errormsg').show();
+			return $(e).addClass('invalid').focus();
+		}
+
+		move(index);
+	}
+
+	function move(index) {
+		var steps = document.getElementsByClassName('slide');
+		var current = null;
+		for(var i = 0; i < steps.length; i++) {
+			var step = steps[i];
+			var top = (i - index + 1) * (height + 50);
+			var style = step.style;
+			style.top = top + 'px';
+			style.opacity = top == 0 ? 1.0 : 0.3;
+			if (top == 0)
+				current = step;
+		}
+
+		var width = Math.ceil(index * 100 / steps.length) + '%';
+		$('.progressor .full').css('width', width);
+
+		(function(e) {
+			if (typeof ga === 'undefined') return;
+			var phaseTitle = e.getAttribute('data-phase-title')
+			if (phaseTitle == 0) return;
+			ga('send', { hitType: 'event', eventCategory: 'Wrote-Review-Phase', eventAction: phaseTitle });
+		})(current);
+	}
+
+	var emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	exports.finish_noreq = function(sender) {
+		if (posting) return;
+		
+		result.email = $('#email').val();
+		result.first_name = $('#first_name').val();
+		result.last_name = $('#last_name').val();
+
+		if (!result.first_name || result.first_name == "")
+			return $('#first_name').focus().parent().addClass('error');
+		else
+			$('#first_name').parent().removeClass('error');
+
+		/*if (!result.last_name || result.last_name == "")
+			return $('#last_name').focus().parent().addClass('error');
+		else
+			$('#last_name').parent().removeClass('error');*/
+
+		if (!result.email || result.email == "" || !emailRegex.test(result.email))
+			return $('#email').focus().parent().addClass('error');
+		else
+			$('#email').parent().removeClass('error');
+
+		posting = true;
+		$.ajax({
+			url: '/-/post/finish',
+			method: 'POST',
+			data: result,
+			success: function (data) {
+				if (typeof ga !== 'undefined') {
+					ga('send', { hitType: 'event', eventCategory: 'Wrote-Review', eventAction: (iframe ? "Iframe" : "On-site") });
+					ga('send', { hitType: 'event', eventCategory: 'Wrote-Review', eventAction: (has_img ? "Image" : "No-image") });
+				}
+				setTimeout(function() {
+					window.location = data;
+				}, 500);
+			},
+			error: function () {
+				posting = false;
+				alert('error');
+			}
+		});
+	};
+
+	exports.navif = function(sender, index, field, value, fields) {
+		save(sender, field, value);
+
+		for(var i = 0; i < fields.length; i++) {
+			var v = result[fields[i]];
+			if (!v || v == "")
+				return;
+		}
+
+		move(index);
+	};
+
+	exports.nav_validate = function(sender, index, field, from, to) {
+		var e = document.getElementById(field);
+		$(e).removeClass('invalid');
+		$(e).parent().find('.errormsg').hide();
+
+		var value = Number(e.value);
+		if (value >= from && value <= to) {
+			save(sender, field, value);
+			move(index);
+			return;
+		}
+
+		$(e).addClass('invalid').focus();
+		$(e).parent().find('.errormsg').show();
+	};
+
+	exports.save = save;
+	exports.nav = nav;
+	exports.move = move;
+	exports.finish = finish;
+})(window);</script><script>function setSystem(sender, units) {
+	if (units == 'ft' || units == 'lbs') {
+		$('.cm-kg').hide();
+		$('.ft-lbs').show();
+	}
+	else {
+		$('.cm-kg').show();
+		$('.ft-lbs').hide();
+	}
+}</script><script>(function(i,s,o,g,r,a,m){ i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q || []).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-62776784-3', 'auto');ga('send', 'pageview');</script><script>if (typeof ga != 'undefined')
+	ga('send', { hitType: 'event', eventCategory: 'Wrote-Review', eventAction: (iframe ? "Started-Iframe" : "Started-On-site") });</script></body></html>
